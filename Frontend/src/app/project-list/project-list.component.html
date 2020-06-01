@@ -1,0 +1,17 @@
+<h2>ACTIVE LEARNING ACTIVITIES</h2>
+<nav>
+  <a class="btn btn-warning" href="#" role="button" routerLink="/setup" routerLinkActive="active">New Learning Activity SetUp</a>
+</nav>
+<table class="table table-hover">
+  <tr>
+    <th *ngFor="let column of headers">
+      {{column}}
+    </th>
+  </tr>
+  <tr *ngFor="let row of projects">
+    <td *ngFor="let col of headers">
+      {{row[col]}}
+    </td>
+
+  </tr>
+</table>

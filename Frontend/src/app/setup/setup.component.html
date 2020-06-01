@@ -1,0 +1,86 @@
+<h2>New Client Set-Up Form</h2>
+<form [formGroup]="setupForm" (ngSubmit)="onSubmit()">
+<div>
+<label>
+  Title:
+  <input  type="text" formControlName="activityTitle">
+</label>
+</div>
+
+<div>
+<label>
+  Description:
+  <input  type="text" formControlName="activityDescription">
+</label>
+</div>
+
+<div>
+<label>
+  Start Date:
+  <input  type="date" formControlName="startDate">
+</label>
+</div>
+  <div>
+    <label>
+      End Date:
+      <input  type="date" formControlName="endDate">
+    </label>
+  </div>
+  <div>
+    <label>
+      Reason:
+      <input  type="text" formControlName="reason">
+    </label>
+  </div>
+  <div>
+    <label>
+      Learnings:
+      <input  type="text" formControlName="learnings">
+    </label>
+  </div>
+  <div>
+    <label>
+      Application:
+      <input  type="text" formControlName="application">
+    </label>
+  </div>
+  <div>
+    <label>
+      Supporting Documentation:
+      <input  type="text" formControlName="support">
+    </label>
+  </div>
+  <div>
+    <label>
+      Participant 1:
+      <input  type="email" formControlName="p1">
+    </label>
+  </div>
+  <div>
+    <label>
+      Participant 2:
+      <input  type="email" formControlName="p2">
+    </label>
+  </div>
+  <div>
+    <label>
+      Participant 3:
+      <input  type="email" formControlName="p3">
+    </label>
+  </div>
+  <div>
+    <label>
+      Participant 4:
+      <input  type="email" formControlName="p4">
+    </label>
+  </div>
+  <div>
+    <label>
+      Participant 5:
+      <input  type="email" formControlName="p5">
+    </label>
+  </div>
+  <p>
+  <button type="submit">Submit</button>
+</p>
+</form>
