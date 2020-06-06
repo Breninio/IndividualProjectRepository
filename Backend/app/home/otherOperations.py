@@ -1,6 +1,5 @@
-from flask import flash, redirect, render_template, url_for, request, jsonify
+from flask import flash, redirect, render_template, url_for, request, jsonify, session
 from flask_login import login_required, login_user, logout_user, current_user
-
 
 from . import home
 from .. import db
@@ -30,13 +29,6 @@ def addactivity():
     flash('You have successfully added the activity')
 
 
-
-
-
-
-
-
-
     # redirect to the login page
     #return redirect(url_for('auth.login'))
 
@@ -49,8 +41,8 @@ def addactivity():
 def getprojects():
     #project_details = LearningActivity.query.all()
     #print(current_user.email)
-    print(current_user)
-    x = LearningActivity.query.filter(LearningActivity.participants.any(email=current_user.email)).all()
+    print(session['username'])
+    x = LearningActivity.query.filter(LearningActivity.participants.any(email=session['username'])).all()
 
     # transforming into JSON-serializable objects
     schema = LearningActivitySchema(many=True)

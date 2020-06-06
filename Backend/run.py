@@ -7,4 +7,5 @@ app = create_app(config_name)
 
 
 if __name__ == '__main__':
+    #app.secret_key = "123"
     app.run(debug=True)

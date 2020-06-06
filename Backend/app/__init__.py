@@ -2,11 +2,19 @@
 
 # third-party imports
 from flask import Flask, session
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_cors import CORS, cross_origin
 from flask_marshmallow import Marshmallow
+import logging
+
+
+def configure_logging():
+    # register root logging
+    logging.basicConfig(level=logging.DEBUG)
+    logging.getLogger('werkzeug').setLevel(logging.INFO)
 
 
 # local imports
@@ -25,11 +33,17 @@ def create_app(config_name):
     CORS(app, resources={r"*": {"origins": "*"}})
     db.init_app(app)
     ma = Marshmallow(app)
+    configure_logging()
+    Session(app)
 
     # temporary route
     @app.route('/')
     def hello_world():
-        return 'Hello, World!'
+        session['tmp'] = 'Johnny'
+        user = session['tmp']
+        print(user)
+        return user
+        # return 'Hello, World!'
 
     login_manager.init_app(app)
     login_manager.login_message = "You must be logged in to access this page."
@@ -46,3 +60,4 @@ def create_app(config_name):
     app.register_blueprint(home_blueprint)
 
     return app
+

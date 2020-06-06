@@ -1,10 +1,10 @@
-from flask import flash, redirect, render_template, url_for, request, jsonify
+from flask import flash, redirect, render_template, url_for, request, jsonify, session, logging
 from flask_login import login_required, login_user, logout_user, current_user
+from flask import current_app
 
 from . import auth
 from .. import db
 from ..models import User
-
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -35,8 +35,11 @@ def login():
     """
     email = request.json['email']
     print(email)
+    session['username'] = "eoinbrennan@mytudublin.ie"
+    print(session['username'])
     password = request.json['password']
     print(password)
+
 
     # check whether employee exists in the database and whether
     # the password entered matches the password in the database
@@ -44,11 +47,22 @@ def login():
     if user is not None and user.verify_password(
             password):
         # log employee in
-        #print(user)
+        print(user)
         login_user(user, remember=True)
+        current_app.logger.info('%s logged in successfully', user.email)
+        #auth.logger.info('%s logged in successfully', user.email)
 
         message = "user logged in"
+
         return jsonify(message, 200)
+
+    else:
+        current_app.logger.info('Login Failed')
+
+        message = "unable to login user"
+        return jsonify(message, 401)
+
+
 
         # redirect to the dashboard page after login
         #return redirect(url_for('home.dashboard'))
