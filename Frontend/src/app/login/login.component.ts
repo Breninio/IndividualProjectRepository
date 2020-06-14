@@ -6,7 +6,7 @@ import { first } from 'rxjs/operators';
 import { AlertService } from '../_services/alert.service';
 import {AuthenticationService} from '../_services/authentication.service';
 
-@Component({ templateUrl: 'login.component.html' })
+@Component({ templateUrl: 'login.component.html', styleUrls: ['./login.component.css'] })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
@@ -61,6 +61,8 @@ export class LoginComponent implements OnInit {
           this.alertService.error(error);
           this.loading = false;
         });
+    //console.log(JSON.parse(localStorage.getItem('currentUser')));
+    console.log(JSON.parse(localStorage.getItem('currentUser')).email);
   }
 }
 

@@ -24,6 +24,9 @@ export class SetupComponent implements OnInit {
     support: new FormControl(''),
     p1: new FormControl(''),
     p2: new FormControl(''),
+    p3: new FormControl(''),
+    p4: new FormControl(''),
+    p5: new FormControl(''),
   });
 
   constructor(private addprojectservice: AddprojectService) { }

@@ -1,86 +1,101 @@
-<h2>New Client Set-Up Form</h2>
-<form [formGroup]="setupForm" (ngSubmit)="onSubmit()">
-<div>
-<label>
-  Title:
-  <input  type="text" formControlName="activityTitle">
-</label>
+<app-header></app-header>
+<div class="container" style="margin-top: 70px;">
+<!--<h2>New Client Set-Up Form</h2>-->
+  <div class="row">
+
+    <div class="col-sm-8 offset-sm-2">
+
+      <div>
+        <form [formGroup]="setupForm" (ngSubmit)="onSubmit()">
+          <div class="form-group row">
+            <label for="inputTitle" class="col-sm-2 col-form-label">Title:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputTitle" placeholder="Title" formControlName="activityTitle">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputDescription" class="col-sm-2 col-form-label">Description:</label>
+            <div class="col-sm-10">
+              <!--<input type="text" class="form-control" id="inputDescription" placeholder="Description" formControlName="activityDescription">-->
+              <textarea class="form-control" id="inputDescription" rows="3" formControlName="activityDescription"></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputStartDate" class="col-sm-2 col-form-label">Start Date:</label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" id="inputStartDate"  formControlName="startDate">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputEndDate" class="col-sm-2 col-form-label">End Date:</label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" id="inputEndDate"  formControlName="endDate">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputReason" class="col-sm-2 col-form-label">Reason:</label>
+            <div class="col-sm-10">
+              <!--<input type="text" class="form-control" id="inputDescription" placeholder="Description" formControlName="activityDescription">-->
+              <textarea class="form-control" id="inputReason" rows="3" formControlName="reason"></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputLearning" class="col-sm-2 col-form-label">Learning:</label>
+            <div class="col-sm-10">
+              <!--<input type="text" class="form-control" id="inputDescription" placeholder="Description" formControlName="activityDescription">-->
+              <textarea class="form-control" id="inputLearning" rows="3" formControlName="learnings"></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputApplication" class="col-sm-2 col-form-label">Learning:</label>
+            <div class="col-sm-10">
+              <!--<input type="text" class="form-control" id="inputDescription" placeholder="Description" formControlName="activityDescription">-->
+              <textarea class="form-control" id="inputApplication" rows="3" formControlName="application"></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputSupport" class="col-sm-2 col-form-label">Application:</label>
+            <div class="col-sm-10">
+              <!--<input type="text" class="form-control" id="inputDescription" placeholder="Description" formControlName="activityDescription">-->
+              <textarea class="form-control" id="inputSupport" rows="3" formControlName="support"></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+          <label for="inputP1" class="col-sm-2 col-form-label">Participant 1:</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputP1" placeholder="E-mail address" formControlName="p1">
+          </div>
+        </div>
+          <div class="form-group row">
+            <label for="inputP2" class="col-sm-2 col-form-label">Participant 2:</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="inputP2" placeholder="E-mail address" formControlName="p2">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputP3" class="col-sm-2 col-form-label">Participant 3:</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="inputP3" placeholder="E-mail address" formControlName="p3">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputP4" class="col-sm-2 col-form-label">Participant 4:</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="inputP4" placeholder="E-mail address" formControlName="p4">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputP5" class="col-sm-2 col-form-label">Participant 5:</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="inputP5" placeholder="E-mail address" formControlName="p5">
+            </div>
+            </div>
+          <p>
+            <button type="submit">Submit</button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div>
-<label>
-  Description:
-  <input  type="text" formControlName="activityDescription">
-</label>
-</div>
-
-<div>
-<label>
-  Start Date:
-  <input  type="date" formControlName="startDate">
-</label>
-</div>
-  <div>
-    <label>
-      End Date:
-      <input  type="date" formControlName="endDate">
-    </label>
-  </div>
-  <div>
-    <label>
-      Reason:
-      <input  type="text" formControlName="reason">
-    </label>
-  </div>
-  <div>
-    <label>
-      Learnings:
-      <input  type="text" formControlName="learnings">
-    </label>
-  </div>
-  <div>
-    <label>
-      Application:
-      <input  type="text" formControlName="application">
-    </label>
-  </div>
-  <div>
-    <label>
-      Supporting Documentation:
-      <input  type="text" formControlName="support">
-    </label>
-  </div>
-  <div>
-    <label>
-      Participant 1:
-      <input  type="email" formControlName="p1">
-    </label>
-  </div>
-  <div>
-    <label>
-      Participant 2:
-      <input  type="email" formControlName="p2">
-    </label>
-  </div>
-  <div>
-    <label>
-      Participant 3:
-      <input  type="email" formControlName="p3">
-    </label>
-  </div>
-  <div>
-    <label>
-      Participant 4:
-      <input  type="email" formControlName="p4">
-    </label>
-  </div>
-  <div>
-    <label>
-      Participant 5:
-      <input  type="email" formControlName="p5">
-    </label>
-  </div>
-  <p>
-  <button type="submit">Submit</button>
-</p>
-</form>

@@ -29,13 +29,19 @@
       <div *ngIf="f.last_name.errors.required">Last Name is required</div>
     </div>
   </div>
-  <div class="form-group">
-    <label for="role">Role</label>
-    <input type="text" formControlName="role" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.role.errors }" />
-    <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
-      <div *ngIf="f.role.errors.required">Role is required</div>
+  <!--<div class="form-group">
+    <label>Roles</label>
+    <div class="form-control">
+      <label class="radio-inline" style="margin-right: 20px">
+        <input type="radio" value="cpdchamp" name="role">
+        CPD Champ
+      </label>
+      <label class="radio-inline">
+        <input type="radio" value="staff" name="role" >
+        Staff
+      </label>
     </div>
-  </div>
+  </div>-->
   <div class="form-group">
     <button [disabled]="loading" class="btn btn-primary">
       <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
