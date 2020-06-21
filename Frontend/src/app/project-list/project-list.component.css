@@ -1,0 +1,7 @@
+.txtimg{
+  display: inline-block;
+  text-align: center;
+}
+.txtimg > img {
+  display: block;
+}

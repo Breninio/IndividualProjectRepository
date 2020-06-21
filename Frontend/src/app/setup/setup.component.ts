@@ -7,6 +7,7 @@ import { FormBuilder} from '@angular/forms';
 import { AddprojectService} from '../addproject.service';
 
 
+
 @Component({
   selector: 'app-setup',
   templateUrl: './setup.component.html',
@@ -52,5 +53,7 @@ export class SetupComponent implements OnInit {
     activities.activity_participant5 = this.setupForm.value.p5;
     this.addprojectservice.addProject(activities).subscribe(data => this.setupForm);
     console.warn(activities.activity_title);
+
+
   }
 }
