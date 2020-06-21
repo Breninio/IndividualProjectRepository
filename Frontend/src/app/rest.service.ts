@@ -4,11 +4,6 @@ import {Activities} from './learningActivity';
 import { HttpHeaders } from '@angular/common/http';
 import {HttpParams} from '@angular/common/http';
 
-//console.log(JSON.parse(localStorage.getItem('currentUser')).email);
-
-let params = new HttpParams();
-params = params.append('username', JSON.parse(localStorage.getItem('currentUser')).email);
-
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +15,10 @@ export class RestService {
 
 
   readProject() {
-    return this.http.get<Activities>(this.projectUrl, {params: params});
+    let params = new HttpParams();
+    params = params.append('username', JSON.parse(localStorage.getItem('currentUser')).username);
+
+    return this.http.get<Activities>(this.projectUrl, {params});
     //return this.http.get<Activities>(this.projectUrl);
   }
 

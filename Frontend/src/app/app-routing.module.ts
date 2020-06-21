@@ -12,9 +12,12 @@ import {PagelayoutComponent} from './pagelayout/pagelayout.component';
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
-  {path: 'projectlist', component: ProjectListComponent, canActivate: [AuthGuard]},
-  {path: 'setup', component: SetupComponent, canActivate: [AuthGuard]},
+  {path: 'register', component: RegisterComponent},
+  {path: 'projectlist', component: ProjectListComponent},
+  {path: 'setup', component: SetupComponent},
+
+  // otherwise redirect to home
+  {path: '**', redirectTo: ''}
  /* {
     path: '', component: LoginComponent,
     children: [
@@ -24,16 +27,15 @@ const routes: Routes = [
   {
     path: 'route2', component: PagelayoutComponent,
     children: [
-      // otherwise redirect to home
-      {path: 'projectlist', component: ProjectListComponent},
-      {path: 'setup', component: SetupComponent},
-      {path: '**', redirectTo: ''}
+
     ]
   }*/
   ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+//@NgModule({
+  //imports: [RouterModule.forRoot(routes)],
+  //exports: [RouterModule]
+//})
+//export class AppRoutingModule { }
+
+export const appRoutingModule = RouterModule.forRoot(routes);

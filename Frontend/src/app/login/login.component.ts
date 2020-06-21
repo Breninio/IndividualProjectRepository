@@ -62,7 +62,10 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         });
     //console.log(JSON.parse(localStorage.getItem('currentUser')));
-    console.log(JSON.parse(localStorage.getItem('currentUser')).email);
+
+  }
+  logout() {
+    this.authenticationService.logout();
   }
 }
 
