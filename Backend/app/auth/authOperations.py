@@ -1,6 +1,8 @@
-from flask import flash, redirect, render_template, url_for, request, jsonify, session, logging
+from flask import flash, redirect, render_template, url_for, request, jsonify, session, logging, make_response
+from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_login import login_required, login_user, logout_user, current_user
 from flask import current_app
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import auth
 from .. import db
@@ -12,19 +14,49 @@ def register():
     Handle requests to the /register route
     Add an employee to the database through the registration form
     """
-    user = User(email=request.json['email'], password=request.json['password'], first_name=request.json['first_name'],
-                last_name=request.json['last_name'], role=request.json['role'])
+    check_user = User.query.filter_by(email=request.json['email']).first()
 
-    # add employee to the database
-    db.session.add(user)
-    db.session.commit()
-    flash('You have successfully registered! You may now login.')
+    if not check_user:
+        print("no user found")
+        try:
+            client_request = request.get_json()
+            email = client_request['email']
+            print(email)
+            password = client_request['password']
+            print(password)
+            first_name = client_request['first_name']
+            print(first_name)
+            last_name = client_request['last_name']
+            print(last_name)
+            role = client_request['role']
+            print(role)
+            user = User(email=email, password=password, first_name=first_name, last_name=last_name, role=role)
+            # add employee to the database
+            #print(user)
+            db.session.add(user)
+            db.session.commit()
+            flash('You have successfully registered! You may now login.')
+            # generate the auth token
+
+            message = "Registration has been successful"
+
+            return make_response(jsonify(message)), 201
+        except Exception as e:
+            responseObject = {
+                'status': 'fail',
+                'message': 'Some error occurred. Please try again.'
+            }
+            print(str(e))
+            return make_response(jsonify(responseObject)), 401
+    else:
+        responseObject = {
+            'status': 'fail',
+            'message': 'User already exists. Please Log in.',
+        }
+        return make_response(jsonify(responseObject)), 202
 
     # redirect to the login page
     #return redirect(url_for('auth.login'))
-
-    message = "user added"
-    return jsonify(message, 200)
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -35,44 +67,44 @@ def login():
     """
     email = request.json['email']
     print(email)
-    session['username'] = "eoinbrennan@mytudublin.ie"
-    print(session['username'])
     password = request.json['password']
     print(password)
 
 
     # check whether employee exists in the database and whether
     # the password entered matches the password in the database
-    user = User.query.filter_by(email=email).first()
-    if user is not None and user.verify_password(
-            password):
-        # log employee in
-        print(user)
-        login_user(user, remember=True)
-        current_app.logger.info('%s logged in successfully', user.email)
-        #auth.logger.info('%s logged in successfully', user.email)
+    try:
+        user = User.query.filter_by(email=email).first()
+        if user is not None and user.verify_password(password):
+            print("found user")
+            print(user)
+            login_user(user, remember=True)
+            current_app.logger.info('%s logged in successfully', user.email)
+            access_token = create_access_token(identity=request.json['email'])
+            refresh_token = create_refresh_token(identity=request.json['email'])
+            return jsonify({
+                'message': 'login successful',
+                'access_token': access_token,
+                'refresh_token': refresh_token,
+                'username': email,
+                'role': user.role,
+            }), 200
 
-        message = "user logged in"
+        else:
+            responseObject = {
+                'status': 'fail',
+                'message': 'User does not exist.'
+            }
+            return make_response(jsonify(responseObject)), 404
 
-        return jsonify(message, 200)
-
-    else:
+    except Exception as e:
         current_app.logger.info('Login Failed')
-
-        message = "unable to login user"
-        return jsonify(message, 401)
-
-
-
-        # redirect to the dashboard page after login
-        #return redirect(url_for('home.dashboard'))
-
-        #when login details are incorrect
-        #else:
-            #flash('Invalid email or password.')
-
-    # load login template
-    #return render_template('auth/login.html', form=form, title='Login')
+        print(e)
+        responseObject = {
+            'status': 'fail',
+            'message': 'Try again'
+        }
+        return make_response(jsonify(responseObject)), 500
 
 
 @auth.route('/logout')

@@ -41,8 +41,8 @@ def addactivity():
 def getprojects():
     #project_details = LearningActivity.query.all()
     #print(current_user.email)
-    print(session['username'])
-    x = LearningActivity.query.filter(LearningActivity.participants.any(email=session['username'])).all()
+    username = request.args.get('username')
+    x = LearningActivity.query.filter(LearningActivity.participants.any(email=username)).all()
 
     # transforming into JSON-serializable objects
     schema = LearningActivitySchema(many=True)
@@ -50,5 +50,5 @@ def getprojects():
     projects = schema.dump(x)
 
     # serializing as JSON
-    #print(projects)
+    print(projects)
     return jsonify(projects)

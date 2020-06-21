@@ -1,4 +1,8 @@
-# app/__init__.py
+# app/__init__.pyc
+
+
+# local imports
+from config import app_config
 
 # third-party imports
 from flask import Flask, session
@@ -9,6 +13,13 @@ from flask_migrate import Migrate
 from flask_cors import CORS, cross_origin
 from flask_marshmallow import Marshmallow
 import logging
+from werkzeug.security import generate_password_hash, check_password_hash
+import sys
+from flask_jwt import JWT
+from flask_jwt_extended import (JWTManager, create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+from werkzeug.security import safe_str_cmp
+from flask_jwt import current_identity
+import base64
 
 
 def configure_logging():
@@ -17,8 +28,7 @@ def configure_logging():
     logging.getLogger('werkzeug').setLevel(logging.INFO)
 
 
-# local imports
-from config import app_config
+
 
 # db variable initialization
 db = SQLAlchemy()
@@ -35,6 +45,8 @@ def create_app(config_name):
     ma = Marshmallow(app)
     configure_logging()
     Session(app)
+    jwt = JWTManager(app)
+
 
     # temporary route
     @app.route('/')
@@ -60,4 +72,3 @@ def create_app(config_name):
     app.register_blueprint(home_blueprint)
 
     return app
-
