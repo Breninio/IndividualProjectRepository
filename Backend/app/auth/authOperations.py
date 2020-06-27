@@ -88,6 +88,7 @@ def login():
                 'refresh_token': refresh_token,
                 'username': email,
                 'role': user.role,
+                'id': user.user_id,
             }), 200
 
         else:

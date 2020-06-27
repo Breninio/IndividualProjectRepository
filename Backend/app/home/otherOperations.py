@@ -1,9 +1,10 @@
-from flask import flash, redirect, render_template, url_for, request, jsonify, session
+from flask import flash, redirect, render_template, url_for, request, jsonify, session, make_response
 from flask_login import login_required, login_user, logout_user, current_user
+import json
 
 from . import home
 from .. import db
-from ..models import User, LearningActivity, LearningActivitySchema
+from ..models import User, LearningActivity, LearningActivitySchema, userActivities
 
 
 @home.route('/new', methods=['GET', 'POST'])
@@ -52,3 +53,55 @@ def getprojects():
     # serializing as JSON
     print(projects)
     return jsonify(projects)
+
+
+# Get activity endpoint
+@home.route('/projectlist/<activityid>', methods=['GET', ])
+def get_activity(activityid):
+    selected_activity = LearningActivity.query.filter_by(activity_id=activityid).all()
+
+    print(selected_activity)
+
+    # transforming into JSON-serializable objects
+    schema = LearningActivitySchema(many=True)
+    # projects = schema.dump(project_details)
+    activity = schema.dump(selected_activity)
+
+    # serializing as JSON
+    print(activity)
+    return jsonify(activity), 200
+
+
+@home.route('/updateHours', methods=['POST',])
+def updateHours():
+    try:
+        client_request = request.get_json()
+        user_id = client_request['user_id']
+        print(user_id)
+        activity_id = client_request['activity_id']
+        print(activity_id)
+        hours = client_request['hours']
+        print(hours['activityHours'])
+
+        #line_item = session.query(userActivities).filter_by(user_id=user_id, activity_id=activity_id).first()
+        line_item = session.query(userActivities).join(User).join(LearningActivity).filter(User.user_id == user_id)
+        print(line_item)
+
+        db.session.commit()
+        flash('You have successfully registered! You may now login.')
+        # generate the auth token
+        # message = "Registration has been successful"
+        # return make_response(jsonify(message)), 201
+    except Exception as e:
+        responseObject = {
+            'status': 'fail',
+            'message': 'Some error occurred. Please try again.'
+            }
+        print(str(e))
+        return make_response(jsonify(responseObject)), 401
+    else:
+        responseObject = {
+            'status': 'fail',
+            'message': 'User already exists. Please Log in.',
+        }
+        return make_response(jsonify(responseObject)), 202

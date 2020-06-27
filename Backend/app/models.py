@@ -14,7 +14,8 @@ from . import login_manager
 
 userActivities = db.Table('user_activities',
                           db.Column('user_id', db.Integer, db.ForeignKey('usertable.user_id')),
-                          db.Column('activity_id', db.Integer, db.ForeignKey('activitytable.activity_id')))
+                          db.Column('activity_id', db.Integer, db.ForeignKey('activitytable.activity_id')), db.Column
+                          ('activity_hours', db.Integer))
 
 
 class User(UserMixin, db.Model):
@@ -41,8 +42,6 @@ class User(UserMixin, db.Model):
             self.is_cpdChamp = True
         else:
             self.is_cpdChamp = False
-
-
 
     def encode_auth_token(self, user_id):
         """
